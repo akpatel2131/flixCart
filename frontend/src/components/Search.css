@@ -10,6 +10,16 @@
   margin-top: 70px;
   padding: 1.5em 0em;
 }
+
+@media only screen and (max-width: 600px) {
+  .search-container {
+    margin-top: 150px;
+  }
+}
+
+.ant-col-xl-6 {
+  min-width: 350px;
+}
 .search-cart {
   margin-top: 70px;
   background: #f6f8fa;
@@ -19,4 +29,10 @@
 /* Set width for the search bar */
 span.ant-input-search {
   width: 30%;
+}
+
+@media only screen and (max-width: 600px) {
+  span.ant-input-search {
+    width: 100%;
+  }
 }

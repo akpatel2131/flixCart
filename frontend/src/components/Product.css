@@ -1,6 +1,8 @@
 .product {
   margin: 1em 2em;
   overflow: hidden;
+  border-radius: 10px;
+  min-width: 200px;
 }
 
 .product .ant-card-body {
@@ -27,10 +29,19 @@
 .product-info {
   width: 100%;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .product-info-text,
-.product-info-utility {
+.product-info-utility,
+.prodcut-rating {
   padding: 1em 1em;
 }
 
@@ -38,13 +49,16 @@
   font-size: 1.3em;
 }
 
+.product-info-utility {
+  align-self: center;
+}
+
 .product-cost {
   font-size: 1.5em;
 }
 
-.product-rating {
+.rating {
   font-size: 1em;
-  margin-bottom: 2em;
 }
 
 .product-category {
