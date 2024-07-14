@@ -7,7 +7,8 @@
   },
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "jest -i"
+    "test": "jest -i",
+    "build": "echo \"No build process defined\""
   },
   "dependencies": {
     "@babel/core": "^7.17.10",
