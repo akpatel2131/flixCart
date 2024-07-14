@@ -144,36 +144,6 @@ const Checkout = () => {
     }
   };
 
-  const deleteAddress = async (addressId) => {
-    let response = {};
-    let errored = false;
-
-    setLoading(true);
-
-    try {
-      response = await (
-        await fetch(`${config.endpoint}/user/addresses/${addressId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
-      ).json();
-    } catch (e) {
-      errored = true;
-    }
-
-    setLoading(false);
-
-    if (validateResponse(errored, response, "delete address")) {
-      if (response) {
-        message.success("Address deleted");
-
-        await getAddresses();
-      }
-    }
-  };
-
   const checkout = async () => {
     let response = {};
     let errored = false;
@@ -226,7 +196,7 @@ const Checkout = () => {
     };
 
     initialize();
-  }, [history]);
+  }, [history, getProducts, getAddresses]);
 
   const radioStyle = {
     display: "block",

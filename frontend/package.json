@@ -23,7 +23,7 @@
     },
     "scripts": {
         "start": "export NODE_OPTIONS=--openssl-legacy-provider && PORT=8081 react-scripts start",
-        "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+        "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build --no-warnings",
         "test": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts test",
         "eject": "react-scripts eject"
     },
