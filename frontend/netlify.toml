@@ -1,9 +1,4 @@
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
-
 [build]
-  base = "src"    # Update this to the correct directory
+  base = "Frontend/src"    # Update this to the correct directory
   publish = "build" # Directory where the build output is stored
   command = "npm run build" # Command to build your project
