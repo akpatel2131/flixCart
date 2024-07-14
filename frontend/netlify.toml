@@ -1,3 +1,9 @@
+[build]
+  base = "Frontend"
+  publish = "Frontend/build"  # Example publish directory if applicable
+  command = "npm run build"
+
+
 [[redirects]]
 from = "/*"
 to = "/index.html"
