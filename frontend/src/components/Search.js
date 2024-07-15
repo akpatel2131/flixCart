@@ -89,7 +89,7 @@ const Search = (props) => {
     if (localStorage.getItem("email") && localStorage.getItem("token")) {
       setLoggedIn(true);
     }
-  }, [getProducts]);
+  }, []);
 
   const getProductElement = (product) => {
     return (

@@ -196,7 +196,7 @@ const Checkout = () => {
     };
 
     initialize();
-  }, [history, getProducts, getAddresses]);
+  }, [history]);
 
   const radioStyle = {
     display: "block",

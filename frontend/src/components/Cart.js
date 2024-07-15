@@ -152,11 +152,11 @@ const Cart = forwardRef(({ products, history, token, checkout }, ref) => {
 
   useEffect(() => {
     refreshCart();
-  }, [refreshCart]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("cartAmount", calculateTotalAmount())
-  },[items, calculateTotalAmount])
+  },[items])
 
   return (
     <div className={["cart", checkout ? "checkout" : ""].join(" ")}>
