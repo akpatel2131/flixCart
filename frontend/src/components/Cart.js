@@ -5,6 +5,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useCallback,
 } from "react";
 import { config } from "../App";
 import "./Cart.css";
@@ -19,7 +20,7 @@ const Cart = forwardRef(({ products, history, token, checkout }, ref) => {
     },
   }));
 
-  const validateResponse = (errored, response) => {
+  const validateResponse = useCallback((errored, response) => {
     if (errored) {
       message.error(
         "Could not update cart. Check that the backend is running, reachable and returns valid JSON."
@@ -31,9 +32,9 @@ const Cart = forwardRef(({ products, history, token, checkout }, ref) => {
     }
 
     return true;
-  };
+  },[])
 
-  const getCart = async () => {
+  const getCart = useCallback(async () => {
     let response = {};
     let errored = false;
 
@@ -57,7 +58,7 @@ const Cart = forwardRef(({ products, history, token, checkout }, ref) => {
     if (validateResponse(errored, response)) {
       return response;
     }
-  };
+  },[token, validateResponse])
 
   const handlePostToCart = async (productId, qty, fromAddToCartButton) => {
     let response = {};
@@ -128,7 +129,7 @@ const Cart = forwardRef(({ products, history, token, checkout }, ref) => {
     }
   };
 
-  const refreshCart = async () => {
+  const refreshCart = useCallback(async () => {
     const cart = await getCart();
 
     if (cart && cart.cartItems) {
@@ -139,24 +140,24 @@ const Cart = forwardRef(({ products, history, token, checkout }, ref) => {
         }))
       );
     }
-  };
+  },[getCart, products])
 
-  const calculateTotalAmount = () => {
+  const calculateTotalAmount = useCallback(() => {
     return items.length
       ? items.reduce(
           (total, item) => total + item.product.cost * item.quantity,
           0
         )
       : 0;
-  };
+  },[items])
 
   useEffect(() => {
     refreshCart();
-  }, []);
+  }, [refreshCart]);
 
   useEffect(() => {
     localStorage.setItem("cartAmount", calculateTotalAmount())
-  },[items])
+  },[items, calculateTotalAmount])
 
   return (
     <div className={["cart", checkout ? "checkout" : ""].join(" ")}>

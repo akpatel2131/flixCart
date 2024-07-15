@@ -1,5 +1,5 @@
 import { Input, message } from "antd";
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect, useCallback} from "react";
 import { withRouter } from "react-router-dom";
 import { config } from "../App";
 
@@ -19,7 +19,7 @@ const Search = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const validateResponse = (errored, response) => {
+  const validateResponse = useCallback((errored, response) => {
     if (errored || (!response.length && !response.message)) {
       message.error(
         "Could not fetch products. Check that the backend is running, reachable and returns valid JSON."
@@ -33,9 +33,9 @@ const Search = (props) => {
     }
 
     return true;
-  };
+  },[])
 
-  const performAPICall = async () => {
+  const performAPICall = useCallback(async () => {
     let response = {};
     let errored = false;
 
@@ -52,7 +52,7 @@ const Search = (props) => {
     if (validateResponse(errored, response)) {
       return response;
     }
-  };
+  },[validateResponse])
 
   const debounceSearch = (event) => {
     const value = event.target.value;
@@ -74,14 +74,14 @@ const Search = (props) => {
     ));
   };
 
-  const getProducts = async () => {
+  const getProducts = useCallback(async () => {
     const response = await performAPICall();
 
     if (response) {
       setProducts(response);
       setFilteredProducts(response.slice());
     }
-  };
+  },[performAPICall])
 
   useEffect(() => {
     getProducts();
@@ -89,7 +89,7 @@ const Search = (props) => {
     if (localStorage.getItem("email") && localStorage.getItem("token")) {
       setLoggedIn(true);
     }
-  }, []);
+  }, [getProducts]);
 
   const getProductElement = (product) => {
     return (

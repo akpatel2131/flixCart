@@ -1,6 +1,6 @@
 import { Button, message, Radio, Row, Col } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { config } from "../App";
 import Cart from "./Cart";
@@ -18,7 +18,7 @@ const Checkout = () => {
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const validateGetProductsResponse = (errored, response) => {
+  const validateGetProductsResponse = useCallback((errored, response) => {
     if (errored || (!response.length && !response.message)) {
       message.error(
         "Could not fetch products. Check that the backend is running, reachable and returns valid JSON."
@@ -32,9 +32,9 @@ const Checkout = () => {
     }
 
     return true;
-  };
+  }, []);
 
-  const getProducts = async () => {
+  const getProducts = useCallback(async () => {
     let response = {};
     let errored = false;
 
@@ -52,9 +52,9 @@ const Checkout = () => {
       }
     }
     setLoading(false);
-  };
+  }, [validateGetProductsResponse]);
 
-  const validateResponse = (errored, response, couldNot) => {
+  const validateResponse = useCallback((errored, response, couldNot) => {
     if (errored) {
       message.error(
         `Could not ${couldNot}. Check that the backend is running, reachable and returns valid JSON.`
@@ -66,9 +66,10 @@ const Checkout = () => {
       return false;
     }
     return true;
-  };
+  }, []);
 
-  const getAddresses = async () => {
+
+  const getAddresses = useCallback(async () => {
     let response = {};
     let errored = false;
 
@@ -101,9 +102,9 @@ const Checkout = () => {
         );
       }
     }
-  };
+  },[validateResponse])
 
-  const addAddress = async () => {
+  const addAddress = useCallback(async () => {
     let response = {};
     let errored = false;
 
@@ -142,9 +143,9 @@ const Checkout = () => {
         await getAddresses();
       }
     }
-  };
+  }, [validateResponse, getAddresses ,newAddress])
 
-  const checkout = async () => {
+  const checkout = useCallback(async () => {
     let response = {};
     let errored = false;
 
@@ -180,7 +181,7 @@ const Checkout = () => {
       localStorage.setItem("cartAmount", null);
       history.push("/thanks");
     }
-  };
+  },[validateResponse, history])
 
   useEffect(() => {
     const initialize = async () => {
@@ -196,7 +197,7 @@ const Checkout = () => {
     };
 
     initialize();
-  }, [history]);
+  }, [history, getProducts, getAddresses]);
 
   const radioStyle = {
     display: "block",
