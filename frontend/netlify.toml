@@ -1,6 +1,6 @@
 [build]
   base = "frontend"
-  publish = "frontend/build"  # Example publish directory if applicable
+  publish = "build"  # Example publish directory if applicable
   command = "CI='' npm run build"
 
 
